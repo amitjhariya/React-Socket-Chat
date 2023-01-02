@@ -1,6 +1,5 @@
 import { validationResult } from "express-validator";
-import {JWT_SECRETE} from './../configurations/index.js'
-import bcrypt from "bcryptjs";
+import { JWT_SECRET } from "./../configurations/index.js";
 import jwt from "jsonwebtoken";
 import User from "./../models/Users.js";
 
@@ -11,47 +10,32 @@ export const signUp = async (req, res) => {
       errors: errors.array(),
     });
   }
-  const { username, email, password } = req.body;
+
   try {
+    const { username, name, email, password } = req.body;
     let user = await User.findOne({
       email,
     });
     if (user) {
-      res.status(400).json({
+      return res.status(400).json({
         error: "Email is taken",
       });
     }
 
-    user = new User({
-      username,
-      email,
-      password,
-    });
-
-    const salt = await bcrypt.genSalt(10);
-    user.password = await bcrypt.hash(password, salt);
+    user = new User({ name, email, password, username });
 
     await user.save();
 
-    const payload = {
-      user: {
-        id: user.id,
-      },
-    };
+    const token = jwt.sign({ _id: user._id }, JWT_SECRET, {
+      expiresIn: "1d",
+    });
 
-    jwt.sign(
-      payload,
-      "randomString",
-      {
-        expiresIn: 10000,
-      },
-      (err, token) => {
-        if (err) throw err;
-        res.status(200).json({
-          token,
-        });
-      }
-    );
+    res.cookie("token", token, { expiresIn: "1d" });
+    const { _id, role } = user;
+    return res.json({
+      token,
+      user: { _id, username, name, email, role },
+    });
   } catch (err) {
     console.log(err.message);
     res.status(500).send("Error in Saving");
@@ -69,39 +53,36 @@ export const signIn = async (req, res) => {
 
   const { email, password } = req.body;
   try {
-    let user = await User.findOne({
-      email
-    });
-    if (!user)
-      return res.status(400).json({
-        message: "User Not Exist",
-      });
-
-    const isMatch = await bcrypt.compare(password, user.password);
-    if (!isMatch)
-      return res.status(400).json({
-        message: "Incorrect Password !",
-      });
-
-    const payload = {
-      user: {
-        id: user.id,
-      },
-    };
-
-    jwt.sign(
-      payload,
-      JWT_SECRETE,
+    let user = await User.findOne(
       {
-        expiresIn: 3600,
+        email,
       },
-      (err, token) => {
-        if (err) throw err;
-        res.status(200).json({
-          token,
-        });
-      }
+      " _id  email username name role hashed_password salt photo"
     );
+
+    if (!user){
+      return  res.status(400).json({
+        message: "User with that email does not exist. Please signup.",
+      });
+    }
+      
+    // authenticate
+
+    if (!user.authenticate(password)) {
+      return res.status(400).json({
+        error: "Email and password do not match.",
+      });           
+    }
+    // generate a token and send to client
+    const token = jwt.sign({ _id: user._id }, JWT_SECRET, { expiresIn: "1d" });
+
+    res.cookie("token", token, { expiresIn: "1d" });
+    const { _id, username, name, role,photo } = user;
+    res.json({
+      success: true,
+      token,
+      user: { _id, username, name, email, role,photo },
+    });
   } catch (e) {
     console.error(e);
     res.status(500).json({
@@ -111,11 +92,11 @@ export const signIn = async (req, res) => {
 };
 
 export const findUser = async (req, res) => {
-    try {
-      // request.user is getting fetched from Middleware after token authentication
-      const user = await User.findById(req.user.id).select("-password")
-      res.json(user);
-    } catch (e) {
-      res.send({ message: "Error in Fetching user" });
-    }
+  try {
+    // request.user is getting fetched from Middleware after token authentication
+    const user = await User.findOne({ _id: req.user._id });
+    res.json(user);
+  } catch (e) {
+    res.send({ message: "Error in Fetching user" });
   }
+};

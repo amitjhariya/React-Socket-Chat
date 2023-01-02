@@ -1,32 +1,8 @@
-import React from "react";
-import Profile from './../assets/profile.jpeg'
+import React from 'react'
 
-function Messages() {
+function Message() {
   return (
-    <div className="messages-workspace">
-      <div className="chat-messages-header">
-        <div className="active-user-contact">
-          <div className="active-user-profil">
-            <img
-              src={Profile}
-              width="48px"
-              height="48px"
-              alt={'Profile'}
-            />
-          </div>
-          <div className="active-user-data">
-            <div className="active-username">
-              <label>
-                <strong>Lumia Noella</strong>
-              </label>
-            </div>
-            <div className="active-user-label">
-              <label>@Lumia Noella</label>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div className="active-guest-messages">
+    <>
         <div className="chat-datetime">
           <div className="msg-date" align="center">
             <label>August 21, 2022 19:45</label>
@@ -257,35 +233,8 @@ function Messages() {
             </div>
           </div>
         </div>
-      </div>
-      <div className="message-editior">
-        <div className="msg-editor" title="Write your message here.">
-          <input type="text" placeholder="Send a message..." />
-        </div>
-        <div className="emoji-icon" title="Add an emoji expression.">
-          <svg viewBox="0 0 496 512" width="24px" height="24px" fill="silver">
-            <path
-              d="M248 8C111 8 0 119 0 256s111 248 248 248 248-111 248-248S385 8 248 8zm80 
-          168c17.7 0 32 14.3 32 32s-14.3 32-32 32-32-14.3-32-32 14.3-32 32-32zm-160 0c17.7 0 
-          32 14.3 32 32s-14.3 32-32 32-32-14.3-32-32 14.3-32 32-32zm80 
-          256c-60.6 0-134.5-38.3-143.8-93.3-2-11.8 9.3-21.6 20.7-17.9C155.1 330.5 200 336 248 
-          336s92.9-5.5 123.1-15.2c11.3-3.7 22.6 6.1 20.7 17.9-9.3 55-83.2 93.3-143.8 93.3z"
-            />
-          </svg>
-        </div>
-        <div className="sender-icon" title="Send this message.">
-          <svg viewBox="0 0 24 24" width="36px" height="36px" fill="silver">
-            <g>
-              <path
-                d="M21.5,11.1l-17.9-9C2.7,1.7,1.7,2.5,2.1,3.4l2.5,6.7L16,12L4.6,13.9l-2.5,6.7c-0.3,0.9,0.6,
-          1.7,1.5,1.2l17.9-9 C22.2,12.5,22.2,11.5,21.5,11.1z"
-              />
-            </g>
-          </svg>
-        </div>
-      </div>
-    </div>
-  );
+    </>
+  )
 }
 
-export default Messages;
+export default Message

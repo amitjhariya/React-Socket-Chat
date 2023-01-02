@@ -1,10 +1,12 @@
 import React, { useState } from "react";
-import logo from "./../logo.svg";
+import logo from "./../../logo.svg";
 import Search from "./Search";
-import useOutsideClick from "./../hooks/useClickOutside.js";
+import useOutsideClick from "./../../hooks/useClickOutside.js";
+import { useNavigate } from "react-router-dom";
 
 function Header() {
   const [isShowSearch, setIsShowSearch] = useState(false);
+  const navigate = useNavigate();
 
   const myRef = useOutsideClick(() => {
     setIsShowSearch(false);
@@ -12,7 +14,9 @@ function Header() {
 
   return (
     <div className="global-header">
-      <div className="logo-img">
+      <div className="logo-img" onClick={()=>{
+        navigate('/')
+      }}>
         <img src={logo} alt="React Chat" />
         <div className="logo-text">
           <label>

@@ -8,12 +8,7 @@ router.get('/',async(req,res)=>{
 })
 
 router.post('/',async(req,res)=>{
-    const data = await create(req,res)
-    res.status(200).send({
-        success:true,
-        message:'Groups Created Successfuly',
-        data
-    })
+    await create(req,res)
 })
 
 

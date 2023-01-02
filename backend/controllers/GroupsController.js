@@ -9,7 +9,7 @@ export const getAll = async (req, res) => {
       data,
     });
   } catch (error) {
-    res.status(200).send({
+    res.status(400).send({
       success: false,
       message: error
     });
@@ -22,9 +22,15 @@ export const create = async (req, res) => {
 
     const group = new Groups({ name, image, users, messages, sockets });
     const data = await group.save();
-    console.log(data);
-    return data;
+    res.status(200).send({
+      success: true,
+      message: "Group Created Successfuly",
+      data,
+    });
   } catch (error) {
-    throw error;
+    res.status(400).send({
+      success: false,
+      message: error
+    });
   }
 };

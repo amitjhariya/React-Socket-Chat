@@ -1,7 +1,7 @@
-import React, { useState } from "react";
-import serachImg from "../assets/loop.svg";
+import React from "react";
+import serachImg from "./../../assets/loop.svg";
 function Search() {
-  const [search, setSearch] = useState([]);
+  // const [search, setSearch] = useState([]);
 
   return (
     <>

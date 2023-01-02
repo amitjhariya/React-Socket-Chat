@@ -154,19 +154,26 @@ div.active-contact div.msg-date > label {
 div.guest-contact {
   transition: background-color 0.4s;
   justify-content: center;
-  padding: 6px 10% 6px 6%;
+  padding: 10px;
   display: inline-flex;
   cursor: pointer;
-  width: 84%;
+  width: 100%;
 }
+div.guest-contact.selected {
+  background-color: #f7f7f7;
+}
+
 div.guest-contact:hover {
   background-color: #f7f7f7;
 }
+
 div.guest-contact div.guest-profil img {
   transform: translateY(2px);
   display: inline-block;
-  border-radius: 64px;
-  object-fit: cover;
+  border-radius: 48px;
+  height: 48px;
+  width: 48px;
+  object-fit:fill
 }
 div.guest-contact div.guest-data {
   justify-content: center;
@@ -510,7 +517,9 @@ div.chat-messages-header div.active-user-contact div.active-user-profil img {
   transform: translateY(2px);
   display: inline-block;
   border-radius: 64px;
-  object-fit: cover;
+  object-fit:fill;
+  width: 48px;
+  height: 48px;
 }
 div.chat-messages-header div.active-user-contact div.active-user-data {
   justify-content: center;
@@ -564,7 +573,8 @@ div.right-chat-msg div.user-profil {
 }
 div.right-chat-msg div.user-profil img {
   border-radius: 32px;
-  object-fit: cover;
+  height: 32px;
+  object-fit: fill;
 }
 :root {
   --option-hovered-color: #f7f7f7;
@@ -812,7 +822,8 @@ div.left-chat-msg div.user-profil {
 }
 div.left-chat-msg div.user-profil img {
   border-radius: 32px;
-  object-fit: cover;
+  height: 32px;
+  object-fit:fill
 }
 div.left-chat-msg div.chat-msg-data {
   margin-left: 10px;
@@ -823,4 +834,7 @@ div.left-chat-msg div.chat-msg-data label#chat-text {
   display: inline-block;
   border-radius: 6px;
   line-height: 24px;
+}
+.msgRef{
+  margin-top: 50px;
 }

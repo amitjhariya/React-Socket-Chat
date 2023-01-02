@@ -1,6 +1,7 @@
 import { Router } from "express";
 import Groups from './groups.js'
-import Auth from './user.js'
+import Auth from './auth.js'
+import User from './user.js'
 
 const router=Router()
 
@@ -9,6 +10,7 @@ router.get('/',(req,res)=>{
 })
 
 router.use('/api/v1/auth',Auth)
+router.use('/api/v1/user',User)
 
 router.use('/api/v1/groups',Groups)
 

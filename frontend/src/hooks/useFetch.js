@@ -8,19 +8,15 @@ function useFetch(url,initial) {
 
   useEffect(() => {
     setLoading("loading...");
-    setData(null);
     setError(null);
-
     const fetchData = async () => {
+      console.log("Use FetchDat")
       // await new Promise(resolve => setTimeout(resolve, 10000));
-      console.log("next")
       if (cache[url]) {
         const data = cache[url];
-        console.log(`Cached Data ${data}`)
         setData(data);
         setLoading(false);
-      } else {
-        
+      } else {        
         try {
           const response = await fetch(url);
           const res = await response.json();

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useSocket, sendMessage, useUser } from "./../hooks/useSocket";
+import { useSocket, sendMessage, useUser } from "./../../hooks/useSocket";
 
 function Chat() {
   const [message, setMessages] = useState("");

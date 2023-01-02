@@ -1,12 +1,12 @@
 import React from "react";
 import Group from "./Group";
-import useFetch from "../hooks/useFetch";
-import { GET_GROUPS } from "./../Constants/index.js";
-import {GroupsLoader} from './Loader/groups.js'
+import useFetch from "../../hooks/useFetch";
+import { GET_GROUPS } from "./../../Constants/index.js";
+import { GroupsLoader } from "./../Loader/groups.js";
 
-function Groups() {
-  const { data, loading, error } = useFetch(GET_GROUPS, []);
-  
+function Groups({ select, selected }) {
+  const { data, loading, error } = useFetch(GET_GROUPS, []); 
+
   return (
     <>
       <div className="users-contacts">
@@ -16,6 +16,8 @@ function Groups() {
               <strong>Groups</strong>
             </label>
           </div>
+          {error && <div>{error} </div>}
+
           <div className="settings-icon" title="Display contacts settings.">
             <svg
               viewBox="0 0 512 512"
@@ -45,9 +47,15 @@ function Groups() {
         <div className="guests-contacts">
           {loading && <GroupsLoader />}
           {data?.length > 0 &&
-            data.map((item, i) => <Group key={i} details={item} />)}
-          {data?.length > 0 &&
-            data.map((item, i) => <Group key={i} details={item} />)}
+            data.map((item, i) => (
+              <Group
+                index={i}
+                select={select}
+                selected={selected}
+                key={i}
+                details={item}
+              />
+            ))}
         </div>
       </div>
       ;

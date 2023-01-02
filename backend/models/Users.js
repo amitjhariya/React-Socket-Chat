@@ -24,21 +24,22 @@ const userSchema = new Schema({
     unique: true,
     lowercase: true,
   },
-  profile: {
-    type: String,
-    required: true,
-  },
   hashed_password: {
     type: String,
     required: true,
+    select: false,
   },
-  salt: String,
+  salt: {
+    type: String,
+    select: false,
+  },
   about: {
     type: String,
   },
   role: {
     type: Number,
     default: 0,
+    select: false,
   },
   photo: {
     data: Buffer,

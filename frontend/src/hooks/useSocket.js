@@ -1,49 +1,64 @@
-import io from 'socket.io-client';
-import  { useState,useEffect } from 'react'
-const url='http://localhost:8000'
+import io from "socket.io-client";
+import { useState, useEffect } from "react";
+
+import { isAuth } from "./../utils/auth";
+import { getUserByID } from "./../api/user";
+
+const url = "http://localhost:8000";
 const socket = io(url);
 
+const cache = {};
+
+const getSenderPic = async (id) => {
+  if (id in cache) {
+    return cache[id].photo;
+  }
+  cache[id] = await getUserByID(id);
+  return cache[id].photo;
+};
 
 function useSocket() {
-  const [messages, setMessages] = useState([]);  
-   
+  const [messages, setMessages] = useState([]);
+
   useEffect(() => {
-    
-    socket.on('message', (data) => {
-      console.log('recived data',data)
-      setMessages((prevMessages) => [...prevMessages, data]);
+    socket.on("message", async (msg) => {
+      // console.log("recived msg", msg);
+      console.log(messages[messages.length - 1])
+      let newMessege = { type: "left", text: msg.text };
+      if (
+        messages?.length &&
+        messages[messages.length - 1].type === 'right'
+      ) {
+        console.log("Show ")
+        newMessege.photo = await getSenderPic(msg.from);
+      } 
+      setMessages((prevMessages) => [...prevMessages, newMessege]);
     });
-    socket.on('connection', (data) => {
-      console.log(data)
+
+    socket.on("connection", (data) => {
+      console.log(data);
     });
 
     return () => {
       socket.disconnect();
     };
-  }, []); 
+  }, []);
 
-  return messages;
+  return { messages, setMessages };
 }
-function useUser(){
-  const [user, setUser] = useState('');
-  useEffect(()=>{
-    let username=localStorage.getItem('username')
-    
-    if(!username){
-      username =window.prompt("Enter User Name")
-      localStorage.setItem('username',username)
-    }
-    setUser(username)
-    socket.emit('login',username)    
-  },[user])
-  
+function useUser() {
+  const [user, setUser] = useState("");
+  useEffect(() => {
+    let Auth = isAuth();
+    setUser(Auth);
+    console.log(Auth);
+    socket.emit("login", Auth);
+  }, []);
   return user;
 }
 
-function sendMessage(type, data){
-  console.log(socket.emit(type, data))
+async function sendMessage(type, data) {
+  socket.emit(type, data);
 }
 
-
-
-export {useSocket,sendMessage,useUser}
+export { useSocket, sendMessage, useUser };
