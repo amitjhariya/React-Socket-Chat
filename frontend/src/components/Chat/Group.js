@@ -9,7 +9,7 @@ function Group({ details, select, selected, index }) {
     if(index === 0 && !selected){
       select(details)
     }
-  }, [])
+  })
   
 
   return (

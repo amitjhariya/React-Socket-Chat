@@ -8,7 +8,7 @@ function MessagesBox({ group }) {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   };
   const [text, setText] = useState("");
-  const { messages, setMessages } = useSocket();
+  const { messages, setMessages,setCache} = useSocket();
   const user = useUser();
   const handleChange = (e) => {
     setText(e.target.value);
@@ -25,8 +25,10 @@ function MessagesBox({ group }) {
       messages.length &&
       messages[messages.length - 1].type === "right"
     ) {
-      newMessege = { type: "right", text };
+      newMessege = { type: "right", text };      
     }
+    setCache(user._id)
+    
 
     setMessages([...messages, newMessege]);
 

@@ -21,7 +21,7 @@ function Login() {
     setData({ ...data, error: false, loading: true });
     try {
       const { email, password } = data;
-      await new Promise((resolve) => setTimeout(resolve, 1000));
+      // await new Promise((resolve) => setTimeout(resolve, 1000));
       const result = await signin({ email, password });
 
       if (result.error) {
@@ -36,6 +36,7 @@ function Login() {
         });
       }
     } catch (error) {
+      console.log(error)
       setData({ ...data, loading: false, error: error });
     }
   };
