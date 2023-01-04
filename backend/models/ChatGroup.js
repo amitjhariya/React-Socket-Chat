@@ -5,7 +5,7 @@ const ChatGroupSchema = new Schema({
   name: { type: String, required: true },
   image:{ type: String },
   users: [{ type: ObjectId, ref: "Users" }],
-  messages: [{ type: ObjectId, ref: "Message" }],
+  messages: [{ type: ObjectId, ref: "Messages" }],
   sockets: [{ type: String }], // Add an array to store socket IDs
   createdAt: { type: Date, default: Date.now },
 });

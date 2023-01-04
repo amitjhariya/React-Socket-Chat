@@ -1,15 +1,42 @@
-import React, { useState,useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
+import { getMessages } from "../../api/group";
 import { useSocket, sendMessage, useUser } from "./../../hooks/useSocket";
 import MessageHeader from "./Message/Header";
 
 function MessagesBox({ group }) {
+  const [text, setText] = useState("");
+  const { messages, setMessages, cache, setCache, getSenderPic } =
+    useSocket();
+  const user = useUser();
+
   const messagesEndRef = useRef(null);
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   };
-  const [text, setText] = useState("");
-  const { messages, setMessages,setCache} = useSocket();
-  const user = useUser();
+
+  const msgLoader = async () => {
+    setMessages([])
+    const messages = await getMessages(group._id);
+
+    for (let i = 0; i < messages.data.messages.length; i++) {
+      const item = messages.data.messages[i];
+      let result = { text: item.text, type: "left" };
+      if (item.sender._id === user._id) {
+        result.type = "right";
+      }
+      if (cache["lastUser"] !== item.sender._id) {
+        if (item.sender._id === user._id) {
+          result.photo = user.photo;
+        } else {
+          result.photo = await getSenderPic(item.sender._id);
+        }
+        cache["lastUser"] = item.sender._id;
+      }
+
+      setMessages((prevMessages) => [...prevMessages, result]);
+    }
+  };
+
   const handleChange = (e) => {
     setText(e.target.value);
   };
@@ -25,18 +52,23 @@ function MessagesBox({ group }) {
       messages.length &&
       messages[messages.length - 1].type === "right"
     ) {
-      newMessege = { type: "right", text };      
+      newMessege = { type: "right", text };
     }
-    setCache(user._id)
-    
+    setCache(user._id);
 
     setMessages([...messages, newMessege]);
 
     setText("");
   };
+
   useEffect(() => {
     scrollToBottom();
   }, [messages]);
+
+  useEffect(() => {
+    console.log("LOAD MESSAGES FROM DB");
+    group && group._id && msgLoader();
+  }, [group]);
   return (
     <div className="messages-workspace">
       <MessageHeader name={group.name} image={group.image} />

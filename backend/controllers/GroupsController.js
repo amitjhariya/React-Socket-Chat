@@ -34,3 +34,27 @@ export const create = async (req, res) => {
     });
   }
 };
+
+
+export const getMessages = async (req, res) => {
+  try {
+    const data = await Groups.findById(req.params.id).populate({
+      path: "messages",
+      populate : {
+        path : 'sender',
+        select:'username name'
+
+      }
+    })  
+    res.status(200).send({
+      success: true,
+      message: "Messages Retrived Successfuly",
+      data,
+    });
+  } catch (error) {
+    res.status(400).send({
+      success: false,
+      message: error
+    });
+  }
+};

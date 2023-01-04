@@ -9,31 +9,33 @@ const socket = io(url);
 
 const cache = {};
 
-const getSenderPic = async (id) => {  
-  if (id in cache) {
-    return cache[id].photo;
-  }  
-  cache[id] = await getUserByID(id);
-  cache["lastUser"]=id
-  return cache[id].photo;
-};
 
 
 function useSocket() {
+  
   const [messages, setMessages] = useState([]);
-  const setCache=(id)=>{
-    cache["lastUser"]=id
-  }
+  const setCache = (id) => {
+    cache["lastUser"] = id;
+  };
+  const getSenderPic = async (id) => {
+    if (id in cache) {
+      return cache[id].photo;
+    }
+    cache[id] = await getUserByID(id);
+    cache["lastUser"] = id;
+    return cache[id].photo;
+  };
 
   useEffect(() => {
+    console.log("UsE Socket")
     socket.on("message", async (msg) => {
-      // console.log("recived msg", msg);      
+      // console.log("recived msg", msg);
       let newMessege = { type: "left", text: msg.text };
-      if (cache["lastUser"]!==msg.from) {
+      if (cache["lastUser"] !== msg.from) {
         newMessege.photo = await getSenderPic(msg.from);
-        cache["lastUser"]=msg.from
+        cache["lastUser"] = msg.from;
       }
-      
+
       setMessages((prevMessages) => [...prevMessages, newMessege]);
     });
 
@@ -46,7 +48,9 @@ function useSocket() {
     };
   }, []);
 
-  return { messages, setMessages,setCache};
+  
+
+  return { messages, setMessages,cache, setCache,getSenderPic };
 }
 function useUser() {
   const [user, setUser] = useState("");

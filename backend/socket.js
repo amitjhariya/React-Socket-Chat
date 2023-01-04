@@ -17,7 +17,7 @@ const Socket = (httpServer) => {
     });
 
     socket.on("login", async (data) => {
-      // console.log(`${data.name} ${socket.id} logged in`);
+      console.log(`${data.name} ${socket.id} logged in`);
       const user = await Users.updateOne(
         { _id: data._id },
         { socket: socket.id }
@@ -27,22 +27,39 @@ const Socket = (httpServer) => {
 
     socket.on("message", async (data) => {
       // console.table(users);
-      // console.log("Received message:", data);
+      console.log("Received message:", data);
       const { to, from, text } = data;
       const groups = await Groups.findById(to).select("name").populate({
         path: "users",
         select: "socket name",
       });
 
-
-      const message = Messages.create({ sender: from, text });
-
       groups.users.map((user, i) => {
         // console.log(`Sending MSG to ${user}`)
         if (user._id == from) return;
         io.to(user.socket).emit("message", { from, text });
       });
-
+      Messages.create(
+        { text: text, sender: from },
+        (err, message) => {
+          if (err) {
+            console.error(err);
+          } else {
+            // Update the ChatGroup document with the new message _id
+            Groups.updateOne(
+              { _id: to },
+              { $push: { messages: message._id } },
+              (err, result) => {
+                if (err) {
+                  console.error(err);
+                } else {
+                  // console.log(result);
+                }
+              }
+            );
+          }
+        }
+      );
       // io.to(socketId).emit("message", { from: data.from, text });
     });
   });
