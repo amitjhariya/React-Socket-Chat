@@ -330,7 +330,7 @@ div.global-header div.searcher input {
   color: #343434;
   font-size: 16px;
   outline: none;
-  width: 69%;
+  width: 100%;
 }
 div.global-header div.searcher input::placeholder {
   font-family: "OxygenRegular";
@@ -353,19 +353,20 @@ div.global-header div.searcher div.clear-icon {
   opacity: 0;
 }
 div.global-header div.searcher div.clear-icon svg {
-  transform: translateY(3px);
+  transform: translateY(-2px);
   display: inline-block;
   transition: fill 0.4s;
   cursor: pointer;
 }
 div.global-header div.searcher div.searcher-icon {
   border-left: 1px solid silver;
+  /* transform: translateY(-3px); */
   padding-right: 15px;
   padding-left: 10px;
   position: absolute;
 }
 div.global-header div.searcher div.searcher-icon svg {
-  transform: translateY(3px);
+  /* transform: translateY(3px); */
   transition: fill 0.4s;
   display: inline-block;
   pointer-events: none;
@@ -558,8 +559,20 @@ div.right-chat-msg div.crblank-space {
 }
 div.right-chat-msg div.chat-msg-data {
   margin-right: 10px;
+  display: flex;
+  flex-direction: column;
+	align-items: flex-end;
+
 }
-div.right-chat-msg div.chat-msg-data label#chat-text {
+div.left-chat-msg div.chat-msg-data label.chat-text {
+  background-color: #eee;
+  padding: 6px 6px 6px 12px;
+  border: 1px solid #ddd;
+  display: inline-block;
+  border-radius: 6px;
+  line-height: 24px;
+}
+div.right-chat-msg div.chat-msg-data label.chat-text {
   background-color: #eee;
   padding: 6px 6px 6px 12px;
   border: 1px solid #ddd;
@@ -611,7 +624,7 @@ div.menu-option {
   flex-direction: row;
   align-items: center;
   cursor: pointer;
-  width: 92%;
+  width: 100%;
 }
 div.menu-option div.option-left-icon label,
 div.menu-option div.option-right-icon label {
@@ -811,10 +824,11 @@ div.msg-settings-bg
   width: 160px;
 }
 div.left-chat-msg {
+  justify-content: flex-start;
   display: inline-flex;
   margin-bottom: 15px;
   margin-top: 15px;
-  width: 60%;
+  width: 100%;
 }
 div.left-chat-msg div.user-profil {
   min-height: 32px;
@@ -837,4 +851,17 @@ div.left-chat-msg div.chat-msg-data label#chat-text {
 }
 .msgRef{
   margin-top: 50px;
+}
+.left-chat-msg .chat-msg-time{
+  position: relative;
+  color: #bcbcbc;
+  font-size: xx-small;
+  bottom: 0;
+}
+.right-chat-msg .chat-msg-time{
+  position: relative;
+  color: #bcbcbc;
+  font-size: xx-small;
+  float: right;
+  bottom: 0;
 }

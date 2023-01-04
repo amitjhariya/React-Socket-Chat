@@ -1,6 +1,6 @@
 import io from "socket.io-client";
 import { useState, useEffect } from "react";
-
+import moment from "moment";
 import { isAuth } from "./../utils/auth";
 import { getUserByID } from "./../api/user";
 
@@ -30,7 +30,8 @@ function useSocket() {
     console.log("UsE Socket")
     socket.on("message", async (msg) => {
       // console.log("recived msg", msg);
-      let newMessege = { type: "left", text: msg.text };
+      const time = moment().format("MMM Do, h:mm a");
+      let newMessege = { type: "left", text: msg.text,time };
       if (cache["lastUser"] !== msg.from) {
         newMessege.photo = await getSenderPic(msg.from);
         cache["lastUser"] = msg.from;

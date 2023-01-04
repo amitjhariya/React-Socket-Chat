@@ -2,11 +2,11 @@ import React, { useState, useEffect, useRef } from "react";
 import { getMessages } from "../../api/group";
 import { useSocket, sendMessage, useUser } from "./../../hooks/useSocket";
 import MessageHeader from "./Message/Header";
+import moment from "moment";
 
 function MessagesBox({ group }) {
   const [text, setText] = useState("");
-  const { messages, setMessages, cache, setCache, getSenderPic } =
-    useSocket();
+  const { messages, setMessages, cache, setCache, getSenderPic } = useSocket();
   const user = useUser();
 
   const messagesEndRef = useRef(null);
@@ -15,12 +15,13 @@ function MessagesBox({ group }) {
   };
 
   const msgLoader = async () => {
-    setMessages([])
+    setMessages([]);
     const messages = await getMessages(group._id);
 
     for (let i = 0; i < messages.data.messages.length; i++) {
       const item = messages.data.messages[i];
-      let result = { text: item.text, type: "left" };
+      var time = moment(item.createdAt).format('MMM Do, h:mm a');
+      let result = { text: item.text, type: "left",time };
       if (item.sender._id === user._id) {
         result.type = "right";
       }
@@ -45,14 +46,15 @@ function MessagesBox({ group }) {
     if (!group || !text) return;
     const data = { from: user._id, to: group._id, text: `${text}` };
     sendMessage("message", data);
+    const time = moment().format("MMM Do, h:mm a");
 
-    let newMessege = { type: "right", text, photo: user.photo };
+    let newMessege = { type: "right", time, text, photo: user.photo };
     if (
       messages &&
       messages.length &&
       messages[messages.length - 1].type === "right"
     ) {
-      newMessege = { type: "right", text };
+      newMessege = { type: "right", text, time };
     }
     setCache(user._id);
 
@@ -90,7 +92,8 @@ function MessagesBox({ group }) {
                     </div>
                   )}
                   <div className="chat-msg-data">
-                    <label id="chat-text">{item.text}</label>
+                    <label className="chat-text">{item.text}</label>
+                    <div className="chat-msg-time">{item.time}</div>
                   </div>
                 </div>
               </div>
