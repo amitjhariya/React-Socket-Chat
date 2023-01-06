@@ -76,9 +76,7 @@ function MessagesBox({ group }) {
       <MessageHeader name={group.name} image={group.image} />
       <div className="active-guest-messages">
         <div className="chat-datetime">
-          <div className="msg-date" align="center">
-            <label>August 21, 2022 19:45</label>
-          </div>
+          
           {messages.map((item, i) => {
             return (
               <div className="chat-msg-user-contact" key={i}>

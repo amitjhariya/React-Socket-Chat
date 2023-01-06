@@ -550,6 +550,7 @@ div.chat-messages-header
 div.right-chat-msg {
   justify-content: flex-end;
   display: inline-flex;
+  flex-direction: column;
   margin-bottom: 15px;
   margin-top: 15px;
   width: 100%;
@@ -579,10 +580,13 @@ div.right-chat-msg div.chat-msg-data label.chat-text {
   display: inline-block;
   border-radius: 6px;
   line-height: 24px;
+  max-width: 70%;
 }
 div.right-chat-msg div.user-profil {
   min-height: 32px;
   min-width: 32px;
+  margin:10px 10px 5px auto;
+  
 }
 div.right-chat-msg div.user-profil img {
   border-radius: 32px;
@@ -829,20 +833,22 @@ div.left-chat-msg {
   margin-bottom: 15px;
   margin-top: 15px;
   width: 100%;
+  flex-direction: column;
 }
 div.left-chat-msg div.user-profil {
-  min-height: 32px;
-  min-width: 32px;
+ 
+  margin: 10px auto 5px 10px;
 }
 div.left-chat-msg div.user-profil img {
   border-radius: 32px;
+  width: 32px;
   height: 32px;
-  object-fit:fill
+  object-fit:cover
 }
 div.left-chat-msg div.chat-msg-data {
   margin-left: 10px;
 }
-div.left-chat-msg div.chat-msg-data label#chat-text {
+div.left-chat-msg div.chat-msg-data label .chat-text {
   padding: 6px 6px 6px 12px;
   border: 1px solid #ddd;
   display: inline-block;

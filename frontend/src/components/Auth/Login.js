@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import {  authenticate, isAuth } from "../../utils/auth";
 import { signin} from './../../api/auth'
 import SignInWith from "./SignInWith";
@@ -13,6 +13,14 @@ function Login() {
     message: "",
   };
   const navigate = useNavigate();
+  useEffect(() => {
+    if (isAuth() && isAuth().role === 1) {
+      navigate(`/admin`);
+    } else {
+      navigate(`/`);
+    }
+  }, [])
+  
 
   const [data, setData] = useState(initialData);
 
