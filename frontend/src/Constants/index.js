@@ -1,4 +1,4 @@
-export const HOST= process.env.REACT_APP_HOST
+export const HOST= process.env.REACT_APP_HOST ||'https://react-chat-service.onrender.com'
 export const API=`${HOST}/api/v1`
 export const GET_GROUPS =`${API}/groups`
 export const USER_LOGIN =`${API}/auth/signin`
