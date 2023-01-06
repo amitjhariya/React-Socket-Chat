@@ -1,0 +1,20 @@
+{
+  "files": {
+    "main.css": "/React-Socket-Chat/static/css/main.6464da02.css",
+    "main.js": "/React-Socket-Chat/static/js/main.96639d1b.js",
+    "static/js/787.cda612ba.chunk.js": "/React-Socket-Chat/static/js/787.cda612ba.chunk.js",
+    "static/media/PublicSansBold.ttf": "/React-Socket-Chat/static/media/PublicSansBold.37b90e7877cafd679cc2.ttf",
+    "static/media/RedHatRegular.ttf": "/React-Socket-Chat/static/media/RedHatRegular.48bda87bb52837866926.ttf",
+    "static/media/OxygenRegular.ttf": "/React-Socket-Chat/static/media/OxygenRegular.56e5848476493abbd93e.ttf",
+    "static/media/logo.svg": "/React-Socket-Chat/static/media/logo.6ce24c58023cc2f8fd88fe9d219db6c6.svg",
+    "index.html": "/React-Socket-Chat/index.html",
+    "static/media/loop.svg": "/React-Socket-Chat/static/media/loop.b19111d3442c4130db3660cc40f03daf.svg",
+    "main.6464da02.css.map": "/React-Socket-Chat/static/css/main.6464da02.css.map",
+    "main.96639d1b.js.map": "/React-Socket-Chat/static/js/main.96639d1b.js.map",
+    "787.cda612ba.chunk.js.map": "/React-Socket-Chat/static/js/787.cda612ba.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.6464da02.css",
+    "static/js/main.96639d1b.js"
+  ]
+}
