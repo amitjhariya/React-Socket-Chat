@@ -68,7 +68,7 @@ function MessagesBox({ group }) {
   }, [messages]);
 
   useEffect(() => {
-    console.log("LOAD MESSAGES FROM DB");
+    // console.log("LOAD MESSAGES FROM DB");
     group && group._id && msgLoader();
   }, [group]);
   return (

@@ -5,7 +5,7 @@ import { GET_GROUPS } from "./../../Constants/index.js";
 import { GroupsLoader } from "./../Loader/groups.js";
 
 function Groups({ select, selected }) {
-  const { data, loading, error } = useFetch(GET_GROUPS, []); 
+  const { data, loading, error } = useFetch(GET_GROUPS, []);
 
   return (
     <>

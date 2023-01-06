@@ -5,12 +5,11 @@ function useFetch(url,initial) {
   const [data, setData] = useState(initial);
   const [loading, setLoading] = useState(null);
   const [error, setError] = useState(null);
-
   useEffect(() => {
     setLoading("loading...");
     setError(null);
     const fetchData = async () => {
-      console.log("Use FetchDat")
+      // console.log("Use FetchDat")
       // await new Promise(resolve => setTimeout(resolve, 10000));
       if (cache[url]) {
         const data = cache[url];
@@ -24,9 +23,9 @@ function useFetch(url,initial) {
           setData(res.data);
           setLoading(false);
         } catch (error) {
-          console.log("Test20",error)
+          // console.log(error)
           setLoading(false);
-          setError("An error occurred. Awkward..");
+          setError(`Error In loading Groups...`);
         }
       }
     };

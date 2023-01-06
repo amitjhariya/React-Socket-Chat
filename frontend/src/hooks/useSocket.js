@@ -3,14 +3,10 @@ import { useState, useEffect } from "react";
 import moment from "moment";
 import { isAuth } from "./../utils/auth";
 import { getUserByID } from "./../api/user";
+import {HOST} from './../Constants/index.js'
 
-const url = "http://localhost:8000";
-const socket = io(url);
-
+const socket = io(HOST);
 const cache = {};
-
-
-
 function useSocket() {
   
   const [messages, setMessages] = useState([]);
@@ -27,7 +23,7 @@ function useSocket() {
   };
 
   useEffect(() => {
-    console.log("UsE Socket")
+    // console.log("UsE Socket")
     socket.on("message", async (msg) => {
       // console.log("recived msg", msg);
       const time = moment().format("MMM Do, h:mm a");

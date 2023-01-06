@@ -14,9 +14,7 @@ function Login() {
   };
   const navigate = useNavigate();
   useEffect(() => {
-    if (isAuth() && isAuth().role === 1) {
-      navigate(`/admin`);
-    } else {
+    if (isAuth() && isAuth().role === 0) {
       navigate(`/`);
     }
   }, [])
@@ -36,15 +34,13 @@ function Login() {
         setData({ ...data, loading: false, error: result.error });
       } else {
         authenticate(result, () => {
-          if (isAuth() && isAuth().role === 1) {
-            navigate(`/admin`);
-          } else {
-            navigate(`/chat`);
+          if (isAuth() && isAuth().role === 0) {
+            navigate(`/`);
           }
         });
       }
     } catch (error) {
-      console.log(error)
+      // console.log(error)
       setData({ ...data, loading: false, error: error });
     }
   };
